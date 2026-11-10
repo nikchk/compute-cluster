@@ -1,7 +1,7 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const token = localStorage.token;
-const NAMES = {linear_system: "СЛАР", fem_poisson: "МСЕ", mandelbrot: "Мандельброт"};
+const NAMES = {linear_system: "СЛАР"};
 const meter = v => `<div class="meter ${v > 85 ? "hot" : v > 60 ? "warm" : ""}" title="${v.toFixed(0)}%"><i style="width:${Math.min(100, v)}%"></i></div>`;
 const dur = s => s == null ? "—" : s < 120 ? Math.round(s) + " с" : Math.round(s / 60) + " хв";
 

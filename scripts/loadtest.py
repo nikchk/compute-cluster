@@ -16,8 +16,7 @@ ap.add_argument("--users", type=int, default=6)
 ap.add_argument("--per-user", type=int, default=3)
 a = ap.parse_args()
 
-heavy = [("mandelbrot", {"width": 1200, "height": 900, "max_iter": 300}),
-         ("linear_system", {"n": 2000}), ("fem_poisson", {"m": 250, "f": 1})]
+heavy = [("linear_system", {"n": 3000, "seed": 1}), ("linear_system", {"n": 2500, "seed": 2})]
 ids, tag = [], random.randint(1000, 9999)
 for i in range(a.users):
     creds = {"username": f"load{tag}_{i}", "password": "password123"}

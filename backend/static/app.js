@@ -1,7 +1,7 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let token = localStorage.token || null, limits = null, openTask = null, timer = null;
-const NAMES = {linear_system: "СЛАР · метод Гауса", fem_poisson: "МСЕ · рівняння Пуассона", mandelbrot: "Зображення · Мандельброт"};
+const NAMES = {linear_system: "СЛАР · метод Гауса"};
 const STATUS = {queued: "у черзі", running: "виконується", done: "готово", failed: "помилка", cancelled: "скасовано"};
 
 async function api(path, opts = {}) {
@@ -50,6 +50,9 @@ async function start() {
 function buildForm() {
   const sel = $("#type");
   sel.innerHTML = Object.entries(limits.tasks).map(([k, v]) => `<option value="${k}">${esc(v.title)}</option>`).join("");
+  const single = Object.keys(limits.tasks).length === 1;      // одна задача - вибір типу не потрібен
+  sel.classList.toggle("hidden", single); sel.previousElementSibling.classList.toggle("hidden", single);
+  $("#taskTitle").textContent = single ? Object.values(limits.tasks)[0].title : "";
   sel.onchange = renderFields; renderFields();
 }
 function renderFields() {
@@ -141,29 +144,15 @@ async function showResult(id) {
   const slot = $("#res-" + id); if (!slot) return;
   if (!resCache[id]) {
     const t = await api("/tasks/" + id); const r = t.result;
-    let html = "Результату немає.", grid = null;
+    let html = "Результату немає.";
     if (r) {
       if (t.type === "linear_system") html = kv({"n": r.n, "відносна нев'язка": r.relative_residual.toExponential(3), "‖x‖": r.x_norm.toFixed(4),
         "x[0..7]": r.x_head.map(v => v.toFixed(4)).join(", "), "час": r.elapsed_s + " с"});
-      if (t.type === "fem_poisson") { grid = r.grid; html = kv({"невідомих": r.unknowns, "елементів": r.elements, "ітерацій CG": r.iterations,
-        "max u": r.u_max.toFixed(6), "час": r.elapsed_s + " с"}) + `<canvas width="360" height="360" style="width:360px;margin-top:10px"></canvas>`; }
-      if (t.type === "mandelbrot") html = kv({"розмір": `${r.width}×${r.height}`, "час": r.elapsed_s + " с"}) +
-        `<img style="margin-top:10px" src="data:image/png;base64,${r.png_base64}" alt="Mandelbrot">`;
     }
-    resCache[id] = {html, grid};
+    resCache[id] = {html};
   }
   const c = resCache[id];
   slot.innerHTML = `<div class="result">${c.html}</div>`;
-  if (c.grid) heat(slot.querySelector("canvas"), c.grid);
 }
 const kv = o => `<div class="kv">${Object.entries(o).map(([k, v]) => `<span>${esc(k)}</span><span>${esc(v)}</span>`).join("")}</div>`;
-function heat(cv, g) {
-  const n = g.length, ctx = cv.getContext("2d"), cell = cv.width / n; let mx = 0;
-  g.forEach(r => r.forEach(v => mx = Math.max(mx, v)));
-  g.forEach((row, j) => row.forEach((v, i) => {
-    const t = mx ? v / mx : 0;
-    ctx.fillStyle = `hsl(${240 - 240 * t},85%,${25 + 35 * t}%)`;
-    ctx.fillRect(i * cell, (n - 1 - j) * cell, cell + 1, cell + 1);
-  }));
-}
 start();
