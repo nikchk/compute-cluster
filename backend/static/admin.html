@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Адмін-панель · Compute Cluster</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+</head>
+<body>
+<header>
+  <h1>Compute<b>/</b>Cluster · адмін</h1>
+  <span class="chip">сервер, що відповів: <b id="served">—</b></span>
+  <span class="chip">оновлення: <b id="tick">—</b></span>
+  <span class="sp"></span><a class="chip" href="/">← до застосунку</a>
+</header>
+<main style="grid-template-columns:1fr">
+  <div id="denied" class="card hidden">Потрібен вхід адміністратора (admin / пароль з docker-compose). <a href="/">Увійти</a></div>
+  <section class="card wide" id="statsCard"><h2>Система</h2><div class="stats" id="stats"></div></section>
+  <section class="card"><h2>Application-сервери</h2>
+    <table><thead><tr><th>Сервер</th><th>Стан</th><th>Задачі</th><th>CPU</th><th>RAM</th><th>Uptime</th></tr></thead><tbody id="servers"></tbody></table>
+  </section>
+  <section class="card"><h2>Активні процеси (у черзі та виконуються)</h2>
+    <table><thead><tr><th>ID</th><th>Користувач</th><th>Тип</th><th>Статус</th><th>Прогрес</th><th>Сервер</th><th></th></tr></thead><tbody id="active"></tbody></table>
+  </section>
+  <section class="card"><h2>Останні завершені</h2>
+    <table><thead><tr><th>ID</th><th>Користувач</th><th>Тип</th><th>Статус</th><th>Сервер</th><th>Тривалість</th></tr></thead><tbody id="recent"></tbody></table>
+  </section>
+  <section class="card"><h2>Журнал подій (балансування / автоскейлінг)</h2><div class="log" id="events"></div></section>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>

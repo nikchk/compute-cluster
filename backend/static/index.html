@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compute Cluster</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+</head>
+<body>
+<header>
+  <h1>Compute<b>/</b>Cluster</h1>
+  <span class="chip">сервер, що відповів: <b id="served">—</b></span>
+  <span class="sp"></span>
+  <span id="userbox" class="hidden row">
+    <span class="chip" id="who"></span>
+    <a id="adminLink" href="admin.html" class="hidden chip">адмін-панель</a>
+    <button class="ghost sm" id="logout">Вийти</button>
+  </span>
+</header>
+
+<main id="auth" class="hidden" style="grid-template-columns:minmax(300px,420px);justify-content:center">
+  <section class="card">
+    <h2>Авторизація (HTTPS)</h2>
+    <label>Логін</label><input id="u" autocomplete="username">
+    <label>Пароль (мін. 6 символів)</label><input id="p" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:14px">
+      <button id="btnLogin">Увійти</button><button id="btnReg" class="ghost">Реєстрація</button>
+    </div>
+    <div id="authMsg" class="msg err"></div>
+  </section>
+</main>
+
+<main id="app" class="hidden">
+  <section class="card">
+    <h2>Нова задача</h2>
+    <label>Тип</label><select id="type"></select>
+    <div id="fields"></div>
+    <div class="cost"><i id="costBar"></i></div>
+    <div class="hint" id="costHint"></div>
+    <div class="row" style="margin-top:14px"><button id="btnRun">Запустити</button></div>
+    <div id="runMsg" class="msg"></div>
+    <div class="hint" id="limitsHint"></div>
+  </section>
+
+  <section class="card">
+    <h2>Мої задачі та історія</h2>
+    <div id="tasks"><div class="hint">Завантаження…</div></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
