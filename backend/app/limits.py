@@ -4,32 +4,11 @@
 
 TASKS = {
     "linear_system": {
-        "title": "Розв'язування СЛАР (метод Гауса з вибором головного елемента)",
+        "title": "Розв'язування системи лінійних рівнянь (метод Гауса з вибором головного елемента)",
         "fields": {
-            "n": {"label": "Кількість невідомих n", "type": "int", "min": 2, "max": 2500, "default": 1200},
+            "n": {"label": "Кількість невідомих n", "type": "int", "min": 2, "max": 3000, "default": 1500},
             "seed": {"label": "Seed генератора", "type": "int", "min": 0, "max": 1_000_000_000, "default": 1},
         },
-    },
-    "fem_poisson": {
-        "title": "Метод скінченних елементів: рівняння Пуассона −Δu = f на [0,1]²",
-        "fields": {
-            "m": {"label": "Вузлів на сторону сітки m", "type": "int", "min": 4, "max": 300, "default": 120},
-            "f": {"label": "Права частина f", "type": "float", "min": -100, "max": 100, "default": 1},
-        },
-    },
-    "mandelbrot": {
-        "title": "Обробка зображень: множина Мандельброта",
-        "fields": {
-            "width": {"label": "Ширина, px", "type": "int", "min": 100, "max": 1600, "default": 800},
-            "height": {"label": "Висота, px", "type": "int", "min": 100, "max": 1600, "default": 600},
-            "max_iter": {"label": "Макс. ітерацій", "type": "int", "min": 50, "max": 5000, "default": 600},
-            "cx": {"label": "Центр X", "type": "float", "min": -2.5, "max": 2.5, "default": -0.5},
-            "cy": {"label": "Центр Y", "type": "float", "min": -2.5, "max": 2.5, "default": 0},
-            "zoom": {"label": "Масштаб", "type": "float", "min": 1, "max": 100000, "default": 1},
-        },
-        # добуток полів не повинен перевищувати ліміт (оцінка трудомісткості)
-        "product": {"fields": ["width", "height", "max_iter"], "max": 400_000_000,
-                    "label": "ширина × висота × ітерації"},
     },
 }
 
